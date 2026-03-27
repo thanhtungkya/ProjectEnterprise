@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Secure Enterprise Messenger</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="login-container bg-slate-100">
+        <div class="card">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-slate-900">Enterprise Messenger</h1>
+                <p class="text-slate-500 text-sm">Secure internal communication</p>
+            </div>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label class="label">Username</label>
+                    <input type="text" id="username" class="input" placeholder="admin_user, manager_it, employee_it" required>
+                </div>
+                <div class="input-group">
+                    <label class="label">Password</label>
+                    <input type="password" id="password" class="input" placeholder="password123" required>
+                </div>
+                <button type="submit" class="btn-primary mt-4">Sign In</button>
+                <div id="error-msg" class="error-message">Invalid credentials. Please try again.</div>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+                <p class="text-xs text-slate-400">Protected by End-to-End Encryption</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { AuthService } from '../src/services/auth.ts';
+        
+        if (AuthService.isAuthenticated()) {
+            window.location.href = 'dashboard.html';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            const result = await AuthService.login(user, pass);
+            if (result.success) {
+                window.location.href = 'dashboard.html';
+            } else {
+                errorMsg.textContent = result.message;
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
