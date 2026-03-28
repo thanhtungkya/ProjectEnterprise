@@ -5,7 +5,11 @@
 }
 
 .sidebar {
-  @apply w-64 bg-slate-900 text-slate-300 flex flex-col transition-all duration-300;
+  @apply w-64 bg-slate-900 text-slate-300 flex flex-col transition-all duration-300 ease-in-out;
+}
+
+.sidebar-overlay {
+  @apply hidden;
 }
 
 .sidebar-header {
@@ -20,8 +24,34 @@
   @apply flex items-center gap-3 px-6 py-3 hover:bg-slate-800 hover:text-white transition-colors cursor-pointer;
 }
 
+.nav-label,
+.sidebar-brand {
+  @apply transition-opacity duration-200;
+}
+
 .nav-item.active {
   @apply bg-indigo-600 text-white;
+}
+
+.dashboard-layout.sidebar-collapsed .sidebar {
+  @apply w-20;
+}
+
+.dashboard-layout.sidebar-collapsed .sidebar-header {
+  @apply justify-center px-2;
+}
+
+.dashboard-layout.sidebar-collapsed .sidebar-brand,
+.dashboard-layout.sidebar-collapsed .nav-label {
+  @apply opacity-0 pointer-events-none w-0 overflow-hidden;
+}
+
+.dashboard-layout.sidebar-collapsed .nav-item {
+  @apply justify-center px-3;
+}
+
+.sidebar-toggle {
+  @apply inline-flex items-center justify-center rounded-lg p-2 hover:bg-slate-100 transition-colors;
 }
 
 .main-container {
@@ -32,8 +62,117 @@
   @apply h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shadow-sm;
 }
 
+.topbar-actions {
+  @apply flex items-center gap-2 sm:gap-3;
+}
+
 .content-area {
   @apply flex-1 overflow-y-auto p-8;
+}
+
+.notification-container {
+  @apply relative;
+}
+
+.notification-trigger {
+  @apply relative inline-flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors;
+}
+
+.notification-badge {
+  @apply absolute -top-1 -right-1 min-w-5 h-5 px-1 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center;
+}
+
+.notification-dropdown {
+  @apply absolute right-0 mt-2 w-80 max-w-[calc(100vw-1rem)] bg-white rounded-2xl shadow-2xl border border-slate-100 z-50 hidden overflow-hidden;
+}
+
+.notification-dropdown.show {
+  @apply block;
+}
+
+.notification-header {
+  @apply flex items-start justify-between gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50;
+}
+
+.notification-read-btn {
+  @apply text-xs font-semibold text-indigo-600 hover:text-indigo-700;
+}
+
+.notification-list {
+  @apply max-h-96 overflow-y-auto;
+}
+
+.notification-unread-dot {
+  @apply inline-block w-2 h-2 rounded-full bg-red-500;
+}
+
+.notification-item:last-child {
+  @apply border-b-0;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    @apply fixed top-0 left-0 h-full z-40 shadow-2xl -translate-x-full;
+  }
+
+  .dashboard-layout.sidebar-open .sidebar {
+    @apply translate-x-0;
+  }
+
+  .dashboard-layout.sidebar-collapsed .sidebar {
+    @apply w-64;
+  }
+
+  .dashboard-layout.sidebar-collapsed .sidebar .sidebar-brand,
+  .dashboard-layout.sidebar-collapsed .sidebar .nav-label {
+    @apply opacity-100 w-auto;
+  }
+
+  .dashboard-layout.sidebar-collapsed .sidebar .sidebar-header {
+    @apply justify-start px-6;
+  }
+
+  .dashboard-layout.sidebar-collapsed .sidebar .nav-item {
+    @apply justify-start px-6;
+  }
+
+  .sidebar-overlay {
+    @apply fixed inset-0 bg-slate-900/40 z-30 hidden;
+  }
+
+  .dashboard-layout.sidebar-open .sidebar-overlay {
+    @apply block;
+  }
+
+  .topbar {
+    @apply px-4;
+  }
+
+  .notification-dropdown {
+    @apply right-0 w-72;
+  }
+
+  .content-area {
+    @apply p-4;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    @apply h-14;
+  }
+
+  .notification-trigger {
+    @apply w-9 h-9;
+  }
+
+  .notification-dropdown {
+    @apply fixed top-16 left-2 right-2 w-auto;
+  }
+
+  .content-area {
+    @apply p-3;
+  }
 }
 
 /* Chat Styles */
@@ -93,7 +232,7 @@
 }
 
 .kanban-column {
-  @apply flex-shrink-0 w-80 bg-slate-100/50 rounded-2xl flex flex-col border border-slate-200;
+  @apply shrink-0 w-80 bg-slate-100/50 rounded-2xl flex flex-col border border-slate-200;
 }
 
 .kanban-header {
@@ -101,7 +240,7 @@
 }
 
 .kanban-list {
-  @apply flex-1 p-3 space-y-3 overflow-y-auto min-h-[100px] transition-colors duration-200;
+  @apply flex-1 p-3 space-y-3 overflow-y-auto min-h-25 transition-colors duration-200;
 }
 
 .kanban-list.drag-over {

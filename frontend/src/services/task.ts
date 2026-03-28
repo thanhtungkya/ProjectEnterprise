@@ -22,9 +22,16 @@ export const TaskService = {
 
   async getTasksForUser(userId: string) {
     const tasks = await this.getAllTasks();
-    return tasks.filter(
-      (t: any) => t.assignedTo === userId || t.assignee_id === userId,
-    );
+    return tasks.filter((t: any) => {
+      const inAssignments = Array.isArray(t.assignments)
+        ? t.assignments.some(
+            (a: any) => a?.user_id === userId || a?.userId === userId,
+          )
+        : false;
+      return (
+        t.assignedTo === userId || t.assignee_id === userId || inAssignments
+      );
+    });
   },
 
   async updateStatus(id: string, newStatus: string) {

@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "EMBED_FRONTEND_IN_BACKEND=false tsx watch --ignore ../frontend/node_modules/.vite-temp --ignore ../frontend/dist src/server.ts",
+    "dev:embedded": "EMBED_FRONTEND_IN_BACKEND=true tsx watch --ignore ../frontend/node_modules/.vite-temp --ignore ../frontend/dist src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "tsc --noEmit"

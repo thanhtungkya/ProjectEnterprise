@@ -49,8 +49,8 @@ npm run dev
 
 You should see:
 ```
-[1] VITE v5.0.0  ready in 456 ms
-[0] [API] Server listening on http://localhost:3000
+[backend] Server running on http://localhost:3000
+[frontend] VITE v6.x ready
 ```
 
 ## Step 4: Login to Dashboard
@@ -149,6 +149,16 @@ npm run dev:backend
 ### Run only frontend
 ```bash
 npm run dev:frontend
+```
+
+### Start clean if terminals were interrupted
+```bash
+npm run dev:fresh
+```
+
+### Optional: embedded frontend in backend (legacy mode)
+```bash
+npm run dev:embedded
 ```
 
 ### Build for production
