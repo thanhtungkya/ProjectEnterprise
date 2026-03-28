@@ -19,14 +19,14 @@
                 <p class="text-slate-500 text-sm">Secure internal communication</p>
             </div>
 
-            <form id="login-form">
+            <form id="login-form" autocomplete="off">
                 <div class="input-group">
                     <label class="label">Username</label>
-                    <input type="text" id="username" class="input" placeholder="admin_user, manager_it, employee_it" required>
+                    <input type="text" id="username" class="input" placeholder="Enter your username" autocomplete="off" required>
                 </div>
                 <div class="input-group">
                     <label class="label">Password</label>
-                    <input type="password" id="password" class="input" placeholder="password123" required>
+                    <input type="password" id="password" class="input" placeholder="Enter your password" autocomplete="off" required>
                 </div>
                 <button type="submit" class="btn-primary mt-4">Sign In</button>
                 <div id="error-msg" class="error-message">Invalid credentials. Please try again.</div>
@@ -40,10 +40,6 @@
 
     <script type="module">
         import { AuthService } from '../src/services/auth.ts';
-        
-        if (AuthService.isAuthenticated()) {
-            window.location.href = 'dashboard.html';
-        }
 
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
